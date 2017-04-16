@@ -87,7 +87,7 @@ public class Client {
 			
 			InputStream inFromServer = client.getInputStream();
 			DataInputStream in = new DataInputStream(inFromServer);
-			System.out.print("Server says " + in.readUTF());
+			System.out.println("Server says " + in.readUTF());
 			
 			client.close();
 		} catch (UnknownHostException e) {

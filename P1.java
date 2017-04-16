@@ -18,7 +18,7 @@ public class P1 {
 	}
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
-		
+		hostName = args[0];
 	    Scanner in = new Scanner(System.in);
 		/*----Find available port and display it on the screen*/
 	    ServerSocket serverSocket =  new ServerSocket(0); 
@@ -28,8 +28,9 @@ public class P1 {
 		port = String.valueOf(serverSocket.getLocalPort());
 		System.out.println(hostAddress + " at port number: " + port);
 		
-		System.out.println("Please input host name:");
-		hostName = in.nextLine();
+//		System.out.println("Please input host name:");
+//		hostName = in.nextLine();
+		hostName = args[0];
 		
 		System.out.println("Please add this host and port on another machine using:\nadd (" 
 		+ hostName + " ," + hostAddress + ", " + port +")");

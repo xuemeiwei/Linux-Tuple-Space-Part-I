@@ -88,13 +88,13 @@ public class Server extends Thread {
 		    		if(isEqual(tmp, str.substring(3))) {
 		    			found = true;
 		    			System.out.println("Tuple is found on this machine: " + hostName);
-		    			matched = "Tuple is found on this machine: " + hostName;
+		    			matched = "Tuple on this machine: " + hostName;
 		    		}
 		    	}
 		    	br.close();
 		    	if(!found) {
 		    		System.out.println("Can't be read because tuple is not found on this machine: " + hostName);
-		    		matched = "Tuple is not found on machine: " + hostName;
+		    		matched = "Tuple not on machine: " + hostName;
 		    	}
             }
             
@@ -116,7 +116,7 @@ public class Server extends Thread {
             }
             
             DataOutputStream out = new DataOutputStream(server.getOutputStream());
-            if(!str.startsWith("add")) {
+            if(!str.startsWith("add") && !str.startsWith("out")) {
             	out.writeUTF(matched);
             }else{
             	out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress() + "\nGoodbye!");
