@@ -57,15 +57,12 @@ public class Client {
 		System.out.println("Connecting to " + hostAddress + " on port " + portNumber);
 		try {
 			Socket client = new Socket(hostAddress, Integer.valueOf(portNumber));
-			System.out.println("Just connected to "+ client.getRemoteSocketAddress());
 			tuples = "ine" + tuples;
-			
 			DataOutputStream out = new DataOutputStream(client.getOutputStream());
 			out.writeUTF(tuples);
-			
 			InputStream inFromServer = client.getInputStream();
 			DataInputStream in = new DataInputStream(inFromServer);
-			System.out.println("Server says " + in.readUTF());
+			System.out.println("Server says: " + in.readUTF());
 			client.close();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -75,11 +72,10 @@ public class Client {
 	}
 	
 	// Exact read request
-	void rde(String hostAddress, String portNumber, String tuples) {
-		System.out.println("Connecting to " + hostAddress + " on port " + portNumber);
+	boolean rde(String hostAddress, String portNumber, String tuples) {
+		String message = "";
 		try {
 			Socket client = new Socket(hostAddress, Integer.valueOf(portNumber));
-			System.out.println("Just connected to "+ client.getRemoteSocketAddress());
 			tuples = "rde" + tuples;
 			
 			DataOutputStream out = new DataOutputStream(client.getOutputStream());
@@ -87,14 +83,18 @@ public class Client {
 			
 			InputStream inFromServer = client.getInputStream();
 			DataInputStream in = new DataInputStream(inFromServer);
-			System.out.println("Server says " + in.readUTF());
-			
+			message = in.readUTF();
 			client.close();
+			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		if(!message.equals("")) {
+			System.out.println(message);
+		}
+		return message.equals("") ? false:true;
 	}
 	
 }

@@ -28,8 +28,6 @@ public class P1 {
 		port = String.valueOf(serverSocket.getLocalPort());
 		System.out.println(hostAddress + " at port number: " + port);
 		
-//		System.out.println("Please input host name:");
-//		hostName = in.nextLine();
 		hostName = args[0];
 		
 		System.out.println("Please add this host and port on another machine using:\nadd (" 
@@ -56,9 +54,11 @@ public class P1 {
   	         e.printStackTrace();
   	    }
 	    
+	    System.out.print("linda>");
 	    String command = in.nextLine();
 	    command.trim();
 	    int hostNumber = 0;
+	    
 	    while(true) {
 	    	
 	    	/*************************If the command is "add"******************/
@@ -107,6 +107,7 @@ public class P1 {
 		    		client.add(otherHostIP, otherHostPortNumber, allHostInfo);
 		    	}
 				br.close();
+				System.out.print("linda>");
 				
 		    }else if(command.startsWith("out")) {
 		    	hostNumber = getHostNumber(netsPath);// The number of hosts info is stored at the first line
@@ -121,7 +122,7 @@ public class P1 {
 		    	System.out.println("The tuple will be stored on " + targetInfo[0]);
 	    		Client client = new Client();
 	    		client.out(targetInfo[1], targetInfo[2], strToOut);
-	    		
+	    		System.out.print("linda>");
 		    }else if(command.startsWith("in")) {
 		    	hostNumber = getHostNumber(netsPath);// The number of hosts info is stored at the first line
 		    	
@@ -136,8 +137,11 @@ public class P1 {
 		    		//Get the host to store the tuple by hashing and send the "out tuple" request to corresponding host
 		    		String[] targetInfo = exactMatch(strToIn, hostNumber, netsPath);
 		    		Client client = new Client();
+		    		while(!client.rde(targetInfo[1], targetInfo[2], strToIn)) {
+		    			
+		    		}
 		    		client.ine(targetInfo[1], targetInfo[2], strToIn);
-		    		
+		    		System.out.print("linda>");
 		    	}else{
 		    		/* Create n threads to broadcast the message to all the hosts. 
 		    		 * If not found, current host will block, waiting for available tuple at all the hosts.
@@ -152,6 +156,7 @@ public class P1 {
 	    			System.out.println("The tuple to be deleted is: [" + sharedInfo.tuples + "]");
 		    		System.out.println("The tuple will be removed from: " + sharedInfo.hostAddress + ". Port number is: " + sharedInfo.port);
 		    		client.ine(sharedInfo.hostAddress, sharedInfo.port, sharedInfo.tuples);// Remove the tuple using exact match command
+		    		System.out.print("linda>");
 		    	}
 		    	
 		    }else if(command.startsWith("rd")) {
@@ -167,7 +172,10 @@ public class P1 {
 		    		//Get the host to store the tuple by hashing and send the "out tuple" request to corresponding host
 		    		String[] targetInfo = exactMatch(strToRd, hostNumber, netsPath);
 		    		Client client = new Client();
-		    		client.rde(targetInfo[1], targetInfo[2], strToRd);
+		    		while(!client.rde(targetInfo[1], targetInfo[2], strToRd)) {
+		    			
+		    		}
+		    		System.out.print("linda>");
 		    	}else{
 		    		/* Create n threads to broadcast the message to all the hosts. 
 		    		 * If not found, current host will block, waiting for available tuple at all the hosts.
@@ -179,12 +187,12 @@ public class P1 {
 		    		broadCast(netsPath, hostNumber, broadcastThread, sharedInfo, strToRd);
 		    		System.out.println("The tuple to be read is: [" + sharedInfo.tuples + "]");
 		    		System.out.println("The tuple will be read from: " + sharedInfo.hostAddress + ". Port number is: " + sharedInfo.port);
+		    		System.out.print("linda>");
 		    	}
 		    	
 		    }else{
 		    	System.out.println("Command Wrong! Must start with add, out, in or rd. Please input again.");
 		    }
-		    System.out.print("linda>");
 		    command = in.nextLine();
 		    command.trim();
 	    }
@@ -249,7 +257,7 @@ public class P1 {
 		}
 		//If not found, block current host
 		while(sharedInfo.tuples.equals("")) {
-			Thread.sleep(5000);
+			Thread.sleep(2000);
 		}
 	}
 	

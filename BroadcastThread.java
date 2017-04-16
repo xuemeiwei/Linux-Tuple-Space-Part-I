@@ -28,7 +28,6 @@ public class BroadcastThread extends Thread{
 			// check whether the tuple is found, if not send request to server to continue searching
 			while(sharedInfo.tuples.equals("")) {
 				Socket message = new Socket(hostAddress, Integer.valueOf(port));
-				System.out.println("Just connected to "+ message.getRemoteSocketAddress());
 				tuples = "bro" + tuples;
 				
 				DataOutputStream out = new DataOutputStream(message.getOutputStream());

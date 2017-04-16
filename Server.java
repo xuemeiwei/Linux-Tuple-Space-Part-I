@@ -21,11 +21,7 @@ public class Server extends Thread {
    public void run() {
       while(true) {
          try {
-            System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");
-            System.out.print("linda>");
             Socket server = serverSocket.accept();
-            System.out.println("Just connected to " + server.getRemoteSocketAddress());
-            
             DataInputStream in = new DataInputStream(server.getInputStream());
             String str = in.readUTF();
             
@@ -33,16 +29,17 @@ public class Server extends Thread {
             if(str.startsWith("add")) {// The command is "add"
                 FileWriter fw = new FileWriter(netsPath);
         		BufferedWriter bw = new BufferedWriter(fw);
-        		System.out.println("Hosts info server received is:" + str.substring(3));
         		bw.write(str.substring(3));
         		bw.write("\n");
         		bw.close();
+        		System.out.print("linda>");
             }
             
             if(str.startsWith("out")) { //The command is "out"
                 FileWriter fw = new FileWriter(tuplesPath, true);
         		BufferedWriter bw = new BufferedWriter(fw);
         		System.out.println("The tuple to be stored on this machine is: [" + str.substring(3).trim() + "]");
+        		System.out.print("linda>");
         		bw.write(str.substring(3));
         		bw.write("\n");
         		bw.close();
@@ -61,18 +58,12 @@ public class Server extends Thread {
 		    			strTowrite += tmp + "\n";
 		    		}else{
 		    			found = true;
-		    			System.out.println("Tuple is found on this machine: " + hostName);
-		    			matched = "Tuple is found on this machine: " + hostName;
+		    			matched = "Tuple is on this machine: " + hostName;
 		    		}
 		    	}
 		    	br.close();
-		    	if(!found) {
-		    		System.out.println("Can't be removed because tuple is not found on this machine: " + hostName);
-		    		matched = "Tuple is not found on machine: " + hostName;
-		    	}
                 FileWriter fw = new FileWriter(tuplesPath);
         		BufferedWriter bw = new BufferedWriter(fw);
-        		System.out.println("The remaining tuples are: \n" + strTowrite);
         		bw.write(strTowrite);
         		bw.close();
         		fw.close();
@@ -83,19 +74,14 @@ public class Server extends Thread {
             	FileReader fr = new FileReader(tuplesPath);
 		    	BufferedReader br = new BufferedReader(fr);
 		    	String tmp = null;
-		    	boolean found = false;
 		    	while((tmp = br.readLine()) != null) {
 		    		if(isEqual(tmp, str.substring(3))) {
-		    			found = true;
 		    			System.out.println("Tuple is found on this machine: " + hostName);
+		    			System.out.print("linda>");
 		    			matched = "Tuple on this machine: " + hostName;
 		    		}
 		    	}
 		    	br.close();
-		    	if(!found) {
-		    		System.out.println("Can't be read because tuple is not found on this machine: " + hostName);
-		    		matched = "Tuple not on machine: " + hostName;
-		    	}
             }
             
             if(str.startsWith("bro")) { //The command is "broadcast"
@@ -110,17 +96,15 @@ public class Server extends Thread {
 		    		}
 		    	}
 		    	br.close();
-		    	if(matched.equals("")) {
-		    		System.out.println("Tuple is not found on this machine: " + hostName);
-		    	}
             }
             
             DataOutputStream out = new DataOutputStream(server.getOutputStream());
             if(!str.startsWith("add") && !str.startsWith("out")) {
             	out.writeUTF(matched);
             }else{
-            	out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress() + "\nGoodbye!");
+            	out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress() + "\n!");
             }
+            
             server.close();
          }catch(IOException e){
             e.printStackTrace();
