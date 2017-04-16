@@ -22,34 +22,26 @@ This assignment is to implement the distributed model using java. In a distribut
 5. SharedInfo.java is the message shared by all the broadcast thread. When a tuple is found on one host, it will set the SharedInfo and all the hosts will know it's found and all the threads will complete. If no tuple is found, all the threads are running all the time and the main program is waiting until available tuple.
 
 ## Code Desciption
-1. P1 contains:
+### 1. P1 contains:
 1) Find available port on current machine;
 2) Create files to store host info and tuples info;
 3) Start the server;
 4) Accept input from the keyboard and call responding cliend request;
 
-2. Server contains:
+### 2. Server contains:
 1) Property: serverSocket, hostName, netsPath, tuplesPath
 2) Method: run() including connects with client, receive message, do corresponding operations, send message to client
 
-3. Client contains (only have methods):
+### 3. Client contains (only have methods):
 1) add(): add request
 2) out(): out request
 3) ine(): exact in request
 4) rde(): exact rd request
 
-4. Broadcast:
+### 4. Broadcast:
 1) Properties: sharedInfo, hostAddress, port, tuples, hostname;
 2) Method: run() which sends request to server
 
-5. SharedInfo contains:
+### 5. SharedInfo contains:
 1) Property: flag, hostAddress, port, tuples
 2) Method: set()
-
-
-
-
-
-
-
-
