@@ -35,7 +35,7 @@ public class P1 {
 		+ hostName + " ," + hostAddress + ", " + port +")");
 		
 		/*************Create the directories for nets and tuples*****************/
-	    String dirPath = "./tmp/xwei1/linda/" + hostName;
+	    String dirPath = "/tmp/xwei1/linda/" + hostName;
 	    File file = new File(dirPath);
 	    file.mkdirs();
 	    

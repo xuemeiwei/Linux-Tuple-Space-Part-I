@@ -62,11 +62,13 @@ public class Server extends Thread {
 		    		}else{
 		    			found = true;
 		    			System.out.println("Tuple is found on this machine: " + hostName);
+		    			matched = "Tuple is found on this machine: " + hostName;
 		    		}
 		    	}
 		    	br.close();
 		    	if(!found) {
 		    		System.out.println("Can't be removed because tuple is not found on this machine: " + hostName);
+		    		matched = "Tuple is not found on machine: " + hostName;
 		    	}
                 FileWriter fw = new FileWriter(tuplesPath);
         		BufferedWriter bw = new BufferedWriter(fw);
@@ -86,11 +88,13 @@ public class Server extends Thread {
 		    		if(isEqual(tmp, str.substring(3))) {
 		    			found = true;
 		    			System.out.println("Tuple is found on this machine: " + hostName);
+		    			matched = "Tuple is found on this machine: " + hostName;
 		    		}
 		    	}
 		    	br.close();
 		    	if(!found) {
 		    		System.out.println("Can't be read because tuple is not found on this machine: " + hostName);
+		    		matched = "Tuple is not found on machine: " + hostName;
 		    	}
             }
             
@@ -112,7 +116,7 @@ public class Server extends Thread {
             }
             
             DataOutputStream out = new DataOutputStream(server.getOutputStream());
-            if(str.startsWith("bro")) {
+            if(!str.startsWith("add")) {
             	out.writeUTF(matched);
             }else{
             	out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress() + "\nGoodbye!");
