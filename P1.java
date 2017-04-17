@@ -34,17 +34,45 @@ public class P1 {
 		+ hostName + " ," + hostAddress + ", " + port +")");
 		
 		/*************Create the directories for nets and tuples*****************/
+		File file = new File("/tmp/xwei1/linda/");
+		if(!file.exists()) {
+			try{
+				file.mkdir();
+				file.setExecutable(true, false);
+				file.setWritable(true, false);
+				file.setReadable(true, false);
+			}catch(Exception e){
+				System.out.println("Error. Can not create!");
+			}
+		}
+		
+		file = new File("/tmp/xwei1/linda/" + hostName);
+		if(!file.exists()) {
+			try{
+				file.mkdir();
+				file.setExecutable(true, false);
+				file.setWritable(true, false);
+				file.setReadable(true, false);
+			}catch(Exception e){
+				System.out.println("Error. Can not create!");
+			}
+		}
+		
+		file = new File("/tmp/xwei1/linda/" + hostName + "/nets.txt");
+		file.createNewFile();
+		file.setExecutable(false, false);
+		file.setReadable(true, false);
+		file.setWritable(true, false);
+		
+		file = new File("/tmp/xwei1/linda/" + hostName + "/tuples.txt");
+		file.createNewFile();
+		file.setExecutable(false, false);
+		file.setReadable(true, false);
+		file.setWritable(true, false);
+		
 	    String dirPath = "/tmp/xwei1/linda/" + hostName;
-	    File file = new File(dirPath);
-	    file.mkdirs();
-	    
-	    String netsPath = dirPath+ "/nets.txt";
-	    file = new File(netsPath);
-	    file.createNewFile();
-	    
-	    String tuplesPath = dirPath+ "/tuples.txt";
-	    file = new File(tuplesPath);
-	    file.createNewFile();
+		String netsPath = dirPath+ "/nets.txt";
+		String tuplesPath = dirPath+ "/tuples.txt";
 	    
 	    /****************Start Server******************/
 	    try{
